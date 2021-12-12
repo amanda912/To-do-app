@@ -1,19 +1,29 @@
 from django.urls import path
 
-from .views import CustomLoginView, RegisterPage,change,changepass,TaskList,TaskReorder,TaskDetail,TaskUpdate,TaskCreate,DeleteView
-from django.contrib.auth.views import LogoutView
+from . import views
+
+app_name = 'calenderapp'
+
 
 urlpatterns = [
-    path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-    path('register/', RegisterPage.as_view(), name='register'),
-    path('changepassword/',change,name="changep"),
-    path('changepass/',changepass,name="changep"),
-      path('task/<int:pk>/', TaskDetail.as_view(), name='task'),
-    path('task-create/', TaskCreate.as_view(), name='task-create'),
-    path('task-update/<int:pk>/', TaskUpdate.as_view(), name='task-update'),
-    path('task-delete/<int:pk>/', DeleteView.as_view(), name='task-delete'),
-    path('task-reorder/', TaskReorder.as_view(), name='task-reorder'),
-    path('', TaskList.as_view(), name='tasks'),
-    
+    path('calender/', views.CalendarViewNew.as_view(), name='calendar'),
+    path('calenders/', views.CalendarView.as_view(), name='calendars'),
+    path('event/new/', views.create_event, name='event_new'),
+    path(
+        'event/edit/<int:pk>/', views.EventEdit.as_view(), name='event_edit'
+    ),
+    path(
+        'event/<int:event_id>/details/', views.event_details,
+        name='event-detail'
+    ),
+    path(
+        'add_eventmember/<int:event_id>', views.add_eventmember,
+        name='add_eventmember'
+    ),
+    path(
+        'event/<int:pk>/remove', views.EventMemberDeleteView.as_view(),
+        name="remove_event"
+    ),
+    path('password/', views.change_password, name='changepassowrd'),
+     path('changepass/', views.changepass, name='passwordchange'),
 ]
