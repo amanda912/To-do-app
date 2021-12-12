@@ -1,0 +1,26 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <a href="{% url 'tasks' %}">&#8592; Back</a>
+</div>
+
+
+<div class="card-body">
+    {% csrf_token %}
+    <form method="POST" action="task-create/">
+        {% csrf_token %}
+        <span>Title: </span>
+        <input type="text" name="title">
+        <span>Description: </span>
+        <input type="text" name="desp">
+        <span>Date: </span>
+        <input type="date" name="date">
+        <span>Submit</span>
+
+        <input class="button" type="submit" value="Submit">
+    </form>
+</div>
+
+
+{% endblock content %}
